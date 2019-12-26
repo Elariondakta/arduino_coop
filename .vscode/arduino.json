@@ -1,0 +1,6 @@
+{
+    "programmer": "Arduino as ISP",
+    "board": "arduino:avr:uno",
+    "port": "/dev/ttyACM0",
+    "sketch": "arduino_poullaier/arduino_poullaier.ino"
+}

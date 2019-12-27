@@ -20,7 +20,7 @@ bool Century=false;
 bool h12;
 bool PM;
 
-int maxMonth[12] = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+const int maxMonth[12] = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 const char sunrise[52][5] = {
     "09:48",
     "09:46",

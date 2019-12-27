@@ -7,5 +7,6 @@
         "filesystem": "cpp",
         "iosfwd": "cpp",
         "chrono": "cpp"
-    }
+    },
+    "python.pythonPath": "/usr/bin/python3"
 }

@@ -4,10 +4,9 @@
 
 DS3231 Clock;
 
-int pinMoteurPWM = 3;
-int pinMoteurDir = 2;
-bool isopen;
-bool day;
+const int pinMoteurPWM = 3;
+const int pinMoteurDir = 2;
+bool isopen = true;
 
 byte Year;
 byte Month;
@@ -22,113 +21,113 @@ bool h12;
 bool PM;
 
 int maxMonth[12] = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-String sunrise[52] = {
-    String("09:48"),
-    String("09:46"),
-    String("09:43"),
-    String("09:37"),
-    String("09:29"),
-    String("09:19"),
-    String("09:08"),
-    String("08:55"),
-    String("08:42"),
-    String("08:28"),
-    String("08:14"),
-    String("07:59"),
-    String("07:45"),
-    String("07:30"),
-    String("07:16"),
-    String("07:02"),
-    String("06:48"),
-    String("06:36"),
-    String("06:24"),
-    String("06:14"),
-    String("06:06"),
-    String("05:59"),
-    String("05:54"),
-    String("05:51"),
-    String("05:50"),
-    String("05:52"),
-    String("05:55"),
-    String("06:01"),
-    String("06:08"),
-    String("06:16"),
-    String("06:24"),
-    String("06:34"),
-    String("06:43"),
-    String("06:53"),
-    String("07:03"),
-    String("07:13"),
-    String("07:23"),
-    String("07:32"),
-    String("07:42"),
-    String("07:52"),
-    String("08:03"),
-    String("08:13"),
-    String("08:24"),
-    String("08:35"),
-    String("08:46"),
-    String("08:58"),
-    String("09:09"),
-    String("09:19"),
-    String("09:28"),
-    String("09:36"),
-    String("09:42"),
-    String("09:46"),
+const char sunrise[52][5] = {
+    "09:48",
+    "09:46",
+    "09:43",
+    "09:37",
+    "09:29",
+    "09:19",
+    "09:08",
+    "08:55",
+    "08:42",
+    "08:28",
+    "08:14",
+    "07:59",
+    "07:45",
+    "07:30",
+    "07:16",
+    "07:02",
+    "06:48",
+    "06:36",
+    "06:24",
+    "06:14",
+    "06:06",
+    "05:59",
+    "05:54",
+    "05:51",
+    "05:50",
+    "05:52",
+    "05:55",
+    "06:01",
+    "06:08",
+    "06:16",
+    "06:24",
+    "06:34",
+    "06:43",
+    "06:53",
+    "07:03",
+    "07:13",
+    "07:23",
+    "07:32",
+    "07:42",
+    "07:52",
+    "08:03",
+    "08:13",
+    "08:24",
+    "08:35",
+    "08:46",
+    "08:58",
+    "09:09",
+    "09:19",
+    "09:28",
+    "09:36",
+    "09:42",
+    "09:46",
 };
-String sunset[52] = {
-    String("17:59"),
-    String("18:07"),
-    String("18:16"),
-    String("18:26"),
-    String("18:38"),
-    String("18:49"),
-    String("19:01"),
-    String("19:12"),
-    String("19:24"),
-    String("19:35"),
-    String("19:46"),
-    String("19:57"),
-    String("20:07"),
-    String("20:18"),
-    String("20:28"),
-    String("20:38"),
-    String("20:49"),
-    String("20:59"),
-    String("21:09"),
-    String("21:19"),
-    String("21:28"),
-    String("21:36"),
-    String("21:43"),
-    String("21:48"),
-    String("21:52"),
-    String("21:53"),
-    String("21:53"),
-    String("21:50"),
-    String("21:45"),
-    String("21:38"),
-    String("21:29"),
-    String("21:19"),
-    String("21:07"),
-    String("20:54"),
-    String("20:41"),
-    String("20:27"),
-    String("20:12"),
-    String("19:57"),
-    String("19:42"),
-    String("19:27"),
-    String("19:13"),
-    String("18:59"),
-    String("18:45"),
-    String("18:32"),
-    String("18:21"),
-    String("18:11"),
-    String("18:02"),
-    String("17:56"),
-    String("17:51"),
-    String("17:49"),
-    String("17:50"),
-    String("17:53")
+const char sunset[52][5] = {
+    "17:59",
+    "18:07",
+    "18:16",
+    "18:26",
+    "18:38",
+    "18:49",
+    "19:01",
+    "19:12",
+    "19:24",
+    "19:35",
+    "19:46",
+    "19:57",
+    "20:07",
+    "20:18",
+    "20:28",
+    "20:38",
+    "20:49",
+    "20:59",
+    "21:09",
+    "21:19",
+    "21:28",
+    "21:36",
+    "21:43",
+    "21:48",
+    "21:52",
+    "21:53",
+    "21:53",
+    "21:50",
+    "21:45",
+    "21:38",
+    "21:29",
+    "21:19",
+    "21:07",
+    "20:54",
+    "20:41",
+    "20:27",
+    "20:12",
+    "19:57",
+    "19:42",
+    "19:27",
+    "19:13",
+    "18:59",
+    "18:45",
+    "18:32",
+    "18:21",
+    "18:11",
+    "18:02",
+    "17:56",
+    "17:51",
+    "17:49",
+    "17:50",
+    "17:53",
 };
 
 void GetDateStuff(byte& Year, byte& Month, byte& Day, byte& DoW, 
@@ -181,7 +180,6 @@ void GetDateStuff(byte& Year, byte& Month, byte& Day, byte& DoW,
 	Second = Temp1*10 + Temp2;
 }
 
-//
 int getWeekOfTheYear() {
     int spentDay = 0;
     for (int i = 0; i < (int)Clock.getMonth(Century)-1; i++) {
@@ -196,17 +194,24 @@ int getWeekOfTheYear() {
 }
 
 void open() {
+    Serial.println("Ouverture de la porte ...");
+    digitalWrite(pinMoteurDir, LOW);
+    digitalWrite(pinMoteurPWM, HIGH);
+    isopen = true;
+}
+
+void close() {
     Serial.println("Fermeture de la porte ...");
     digitalWrite(pinMoteurDir, HIGH);
     digitalWrite(pinMoteurPWM, HIGH);
     isopen = false;
 }
-
-void close() {
-    Serial.println("Ouverture de la porte ...");
+void beep() {
+    digitalWrite(pinMoteurDir, HIGH);
+    digitalWrite(pinMoteurPWM, HIGH);
+    delay(500);
     digitalWrite(pinMoteurDir, LOW);
     digitalWrite(pinMoteurPWM, HIGH);
-    isopen = true;
 }
 void setup(void) {
     // We'll send debugging information via the Serial monitor
@@ -215,13 +220,14 @@ void setup(void) {
 
     // Start the serial port
 	Serial.begin(9600);
-
 	// Start the I2C interface
 	Wire.begin();
+    beep();
+    delay(5000);
+    Serial.println("Redémarrage de la carte...");
 }
 
 void loop(void) {
-	// Give time at next five seconds
 	while (true) {
 		// If something is coming in on the serial line, it's
 		// a time correction so set the clock accordingly.
@@ -241,29 +247,66 @@ void loop(void) {
 			Clock.setSecond(Second);
 		}
 
-		// Serial.print(Clock.getDate(), DEC);
-		// Serial.print("/");
-		// Serial.print(Clock.getMonth(Century), DEC);
-		// Serial.print("/");
-		// Serial.print(Clock.getYear(), DEC);
-		// Serial.print(" ");
-		// Serial.print(Clock.getHour(h12, PM), DEC); //24-hr
-		// Serial.print(":");
-		// Serial.print(Clock.getMinute(), DEC);
-
+        Serial.println();
+		Serial.print(Clock.getDate(), DEC);
+		Serial.print("/");
+		Serial.print(Clock.getMonth(Century), DEC);
+		Serial.print("/");
+		Serial.print(Clock.getYear(), DEC);
+		Serial.print(" ");
+		Serial.print(Clock.getHour(h12, PM), DEC); //24-hr
+		Serial.print(":");
+		Serial.println(Clock.getMinute(), DEC);
+        Serial.println();
 
         int weekOfTheYear = getWeekOfTheYear();
 
-        // delay(100);
-        String sunrise = sunrise[weekOfTheYear-1];
-        // String sunset = sunset[weekOfTheYear-1];
-        // String sunrise_h = sunrise[weekOfTheYear-1];
-        // String sunrise_m = sunrise[weekOfTheYear-1];
-        delay(1000);
-        Serial.println(sunrise[weekOfTheYear-1]);
-        // Serial.println(sunrise_m);
-        
+        int rise_h = String(sunrise[weekOfTheYear-1]).substring(0, 2).toInt();
+        int rise_m = String(sunrise[weekOfTheYear-1]).substring(3, 5).toInt();
+        int set_h = String(sunset[weekOfTheYear-1]).substring(0, 2).toInt();
+        int set_m = String(sunset[weekOfTheYear-1]).substring(3, 5).toInt();              
 
-		delay(1000);
+        DateTime now = DateTime((int)Clock.getYear(), (int)Clock.getMonth(Century), (int)Clock.getDate(), (int)Clock.getHour(h12, PM), (int)Clock.getMinute(), (int)Clock.getSecond());
+        DateTime rise = DateTime((int)Clock.getYear(), (int)Clock.getMonth(Century), (int)Clock.getDate(), rise_h, rise_m, 0);
+        DateTime set = DateTime((int)Clock.getYear(), (int)Clock.getMonth(Century), (int)Clock.getDate(), set_h, set_m, 0);
+        
+        //Si l'heure actuelle est comprise entre le levé et le coucher de soleil
+        //si il fait jour
+        if (now.unixtime() < set.unixtime() && now.unixtime() > rise.unixtime()) {
+            if (!isopen) {
+                open();
+            }
+        } else {    //si il fait nuit
+            if (isopen) {
+                close();
+            }
+        }
+
+
+        Serial.print("Coucher de soleil : ");
+        Serial.print(set.hour());
+        Serial.print(":");
+        Serial.println(set.minute());
+        Serial.println("----------------");
+
+        Serial.print("Lever de soleil : ");
+        Serial.print(rise.hour());
+        Serial.print(":");
+        Serial.println(rise.minute());
+        Serial.println("----------------");
+
+        Serial.print("Date : ");
+		Serial.print(Clock.getDate(), DEC);
+		Serial.print("/");
+		Serial.print(Clock.getMonth(Century), DEC);
+		Serial.print("/");
+		Serial.print(Clock.getYear(), DEC);
+		Serial.print(" ");
+		Serial.print(Clock.getHour(h12, PM), DEC); //24-hr
+		Serial.print(":");
+		Serial.println(Clock.getMinute(), DEC);
+        Serial.println("----------------");
+
+		delay(10000);
 	}
 }

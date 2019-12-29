@@ -7,12 +7,12 @@
     $sunset = Array();
     $sunrise = Array();
 
-    for ($i = 0; $i < 365; $i++) {
-        // $step = $i*604800;      //timestamp d'une semaine (nbr de secondes en une semaine)
-        $step = $i*86400;    //timestamp d'un jour
+    for ($i = 0; $i < 52; $i++) {
+        $step = $i*604800;      //timestamp d'une semaine (nbr de secondes en une semaine)
+        // $step = $i*86400;    //timestamp d'un jour
         $base_year = 1577836800;    //timestamp de 01/01/20 00:00:00
         $sunset[$i] = date_sunset($base_year + $step, SUNFUNCS_RET_STRING, 48.8566969, 2.3514616, 90, 2);
-        $sunrise[$i] = date_sunrise($base_year + $step, SUNFUNCS_RET_STRING, 48.8566969, 2.3514616, 90, 2);
+        $sunrise[$i] = date_sunrise($base_year + $step, SUNFUNCS_RET_STRING, 48.8566969, 2.3514616, 90, 1);
     }
 
     file_put_contents("sunset.json", json_encode($sunset));
